@@ -1,25 +1,22 @@
-# syntax=docker/dockerfile:1
-
 # ==========================================
-# Stage 1: builder 
+# Stage 1: Сборка приложения
 # ==========================================
-FROM eclipse-temurin:21-jdk-alpine AS builder
-
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
 WORKDIR /app
 
-COPY JewelryApplication.java .
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-RUN javac JewelryApplication.java
+COPY src ./src
+RUN mvn clean package -DskipTests
 
 # ==========================================
-# Stage 2: runtime 
+# Stage 2: Запуск приложения
 # ==========================================
-FROM eclipse-temurin:21-jre-alpine
-
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
-COPY --from=builder /app/JewelryStoreApp.class .
+COPY --from=builder /app/target/*.jar app.jar
 
 EXPOSE 8080
-
-CMD ["java", "JewelryApplication"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

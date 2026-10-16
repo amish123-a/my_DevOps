@@ -1,10 +1,12 @@
-@RestController
-public class JewelryController {
-    @GetMapping("/catalog")
-    public List<Map<String, Object>> getCatalog() {
-        return List.of(
-            Map.of("id", 1, "name", "Золотое кольцо", "price", 50000),
-            Map.of("id", 2, "name", "Серебряный браслет", "price", 15000)
-        );
+package com.jewelry.shop;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class JewelryApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(JewelryApplication.class, args);
+        System.out.println("Jewelry Shop API запущен на порту 8080");
     }
 }
