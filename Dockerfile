@@ -1,7 +1,7 @@
 # ==========================================
 # Stage 1: Сборка приложения
 # ==========================================
-FROM maven:3.9.6-eclipse-temurin-17 AS builder
+FROM maven:3.9.6-eclipse-temurin-17 AS runtime
 WORKDIR /app
 
 COPY pom.xml .
